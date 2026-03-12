@@ -1,9 +1,5 @@
 run = "npm start"
 entrypoint = "server/src/index.js"
 
-[deployment]
-run = ["npm", "start"]
-deploymentTarget = "dynamic"
-
 [languages.javascript]
 npmInstall = true
