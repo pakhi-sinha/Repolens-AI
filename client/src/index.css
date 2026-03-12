@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════════════════
+   DESIGN SYSTEM TOKENS — RepoLens AI
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  /* Colors */
+  --color-bg: hsl(230, 25%, 7%);
+  --color-bg-alt: hsl(230, 22%, 10%);
+  --color-surface: hsl(230, 20%, 13%);
+  --color-surface-hover: hsl(230, 20%, 17%);
+  --color-surface-border: hsl(230, 18%, 20%);
+
+  --color-primary: hsl(250, 80%, 62%);
+  --color-primary-soft: hsl(250, 80%, 62%, 0.15);
+  --color-primary-hover: hsl(250, 85%, 68%);
+
+  --color-accent: hsl(170, 70%, 48%);
+  --color-accent-soft: hsl(170, 70%, 48%, 0.12);
+
+  --color-text: hsl(0, 0%, 93%);
+  --color-text-secondary: hsl(230, 12%, 60%);
+  --color-text-muted: hsl(230, 10%, 42%);
+
+  --color-error: hsl(0, 75%, 60%);
+  --color-error-soft: hsl(0, 75%, 60%, 0.12);
+  --color-warning: hsl(40, 90%, 55%);
+  --color-success: hsl(145, 65%, 48%);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, hsl(250, 80%, 62%), hsl(290, 75%, 58%));
+  --gradient-accent: linear-gradient(135deg, hsl(170, 70%, 48%), hsl(200, 80%, 55%));
+  --gradient-hero: linear-gradient(160deg, hsl(250, 80%, 62%, 0.3) 0%, transparent 50%),
+                   linear-gradient(210deg, hsl(170, 70%, 48%, 0.15) 0%, transparent 50%);
+  --gradient-card: linear-gradient(180deg, hsl(230, 20%, 15%) 0%, hsl(230, 20%, 12%) 100%);
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3.5rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Borders & Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 40px hsl(250, 80%, 62%, 0.2);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
