@@ -2,8 +2,8 @@ import axios from "axios";
 
 const GEMINI_API = "https://generativelanguage.googleapis.com/v1beta";
 
-// Gemini 2.5 Flash — smart + generous free tier
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+// Gemini 2.5 Pro — high-power analysis for complex codebases
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-pro";
 
 /**
  * Sends repository data to Gemini and returns a structured analysis.

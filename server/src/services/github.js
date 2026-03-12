@@ -42,9 +42,16 @@ export async function fetchRepoData(owner, repo) {
         }
         if (err.response?.status === 403) {
             const error = new Error(
-                "GitHub API rate limit exceeded. Try again later or add a GITHUB_TOKEN to .env."
+                "GitHub API rate limit exceeded or access forbidden. Please add a GITHUB_TOKEN to your environment/Secrets to continue."
             );
             error.statusCode = 429;
+            throw error;
+        }
+        if (err.response?.status === 401) {
+            const error = new Error(
+                "Invalid GITHUB_TOKEN. Please check your environment/Secrets."
+            );
+            error.statusCode = 401;
             throw error;
         }
         throw err;
