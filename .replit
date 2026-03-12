@@ -1,9 +1,6 @@
 run = "npm start"
 entrypoint = "server/src/index.js"
 
-[nix]
-channel = "stable-23_11"
-
 [deployment]
 run = ["npm", "start"]
 deploymentTarget = "dynamic"
