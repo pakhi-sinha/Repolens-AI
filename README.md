@@ -25,7 +25,7 @@ Paste a GitHub URL and get a complete explanation: tech stack, architecture, cod
 | AI Model | Google Gemini 2.5 Pro |
 | GitHub Data | GitHub REST API v3 |
 
-## Getting Started
+## Getting Started (Local)
 
 ### Prerequisites
 
@@ -33,69 +33,59 @@ Paste a GitHub URL and get a complete explanation: tech stack, architecture, cod
 - A free Gemini API key from [aistudio.google.com](https://aistudio.google.com)
 - (Optional) A GitHub Personal Access Token for higher API rate limits
 
-### 1. Clone & Setup
+### Installation
 
-```bash
-git clone <your-repo-url>
-cd repolens-ai
-```
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd Repo-lens
+   ```
 
-### 2. Setup the Backend
+2. **Install all dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-cd server
-cp .env.example .env
-# Edit .env and add your GEMINI_API_KEY
-npm install
-npm run dev
-```
+3. **Setup environment variables:**
+   ```bash
+   cp .env.example .env
+   # Add your GEMINI_API_KEY to .env
+   ```
 
-The server starts on `http://localhost:3001`.
+4. **Run the application:**
+   ```bash
+   npm start
+   ```
+   The server starts on `http://localhost:5000`.
 
-### 3. Setup the Frontend
+## Deployment (Render)
 
-```bash
-cd client
-npm install
-npm run dev
-```
+### 1. Push to GitHub
+Ensure your repository is pushed to your GitHub account.
 
-The app opens at `http://localhost:5173`.
-
-### 4. Use It
-
-1. Open `http://localhost:5173` in your browser
-2. Paste any public GitHub repository URL
-3. Click **Analyze** and wait for the AI-generated explanation
-
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GEMINI_API_KEY` | ✅ Yes | Your Google Gemini API key |
-| `GITHUB_TOKEN` | ❌ Optional | GitHub PAT for higher rate limits (60 → 5000 req/hr) |
-| `PORT` | ❌ Optional | Backend server port (default: 3001) |
+### 2. Create a Web Service on Render
+1. Go to your [Render Dashboard](https://dashboard.render.com/) and click **New > Web Service**.
+2. Connect your repository.
+3. Use the following configuration:
+   - **Environment**: `Node`
+   - **Build Command**: `npm install && npm run build`
+   - **Start Command**: `npm start`
+4. **Environment Variables**:
+   Add the following in the Render dashboard:
+   - `GEMINI_API_KEY`: Your key from Google AI Studio.
+   - `GITHUB_TOKEN`: (Highly recommended) Your GitHub PAT to avoid 403 Forbidden errors.
+   - `NODE_VERSION`: `18` (or higher).
 
 ## Project Structure
 
 ```
-repolens-ai/
-├── client/                  # React + Vite frontend
-│   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   ├── pages/           # HomePage, ResultsPage
-│   │   ├── styles/          # CSS design system
-│   │   ├── utils/           # API calls
-│   │   ├── App.jsx          # Main app
-│   │   └── main.jsx         # Entry point
-│   └── package.json
-├── server/                  # Node.js + Express backend
-│   ├── src/
-│   │   ├── routes/          # API routes
-│   │   ├── services/        # GitHub + AI services
-│   │   ├── utils/           # URL parser, validators
-│   │   └── index.js         # Server entry point
-│   └── package.json
+Repo-lens/
+├── frontend/        # React + Vite frontend
+├── routes/          # API routes
+├── services/        # GitHub + AI logic
+├── utils/           # URL parsing and validation
+├── server.js        # Main entry point (Backend)
+├── package.json     # Project configuration
 └── README.md
 ```
 

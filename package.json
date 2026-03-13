@@ -1,15 +1,20 @@
 {
-  "name": "repolens-ai-replit",
+  "name": "repolens-ai",
   "version": "1.0.0",
-  "description": "Full-stack deployment for RepoLens AI on Replit",
-  "main": "server/src/index.js",
+  "description": "RepoLens AI — Production deployment for Render",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
-    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
-    "build-client": "cd client && npm run build",
-    "start": "cd server && npm start",
-    "dev": "cd server && npm run dev"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build": "cd frontend && npm install && npm run build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^1.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0"
+  },
   "engines": {
     "node": ">=18"
   }

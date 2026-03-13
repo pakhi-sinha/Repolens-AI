@@ -1,5 +1,0 @@
-run = "npm start"
-entrypoint = "server/src/index.js"
-
-[languages.javascript]
-npmInstall = true
