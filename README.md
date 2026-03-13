@@ -4,6 +4,8 @@
 
 Paste a GitHub URL and get a complete explanation: tech stack, architecture, code flow, difficulty rating, and a learning roadmap.
 
+🚀 **Live Demo:** [https://repolens-ai-bl9l.onrender.com/](https://repolens-ai-bl9l.onrender.com/)
+
 ## Features
 
 - 📋 **Project Overview** — What the repository does
