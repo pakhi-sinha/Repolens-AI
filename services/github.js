@@ -20,7 +20,7 @@ function createClient() {
 
 /**
  * Fetches all repository data in parallel.
- * Returns { repoInfo, readme, languages, tree }
+ * Returns { repoInfo, readme, languages, tree, importantFiles }
  */
 export async function fetchRepoData(owner, repo) {
     const client = createClient();
@@ -75,6 +75,9 @@ export async function fetchRepoData(owner, repo) {
     // File tree array
     const tree = treeRes.status === "fulfilled" ? treeRes.value : [];
 
+    // Filter and fetch important files
+    const importantFiles = await fetchImportantFiles(client, owner, repo, tree);
+
     return {
         repoInfo: {
             name: repoData.name,
@@ -89,7 +92,49 @@ export async function fetchRepoData(owner, repo) {
         readme: readmeContent,
         languages,
         tree,
+        importantFiles,
     };
+}
+
+/**
+ * Identifies and fetches content for key repository files.
+ */
+async function fetchImportantFiles(client, owner, repo, tree) {
+    const importantPaths = tree
+        .filter(item => item.type === "file")
+        .filter(item => {
+            const path = item.path.toLowerCase();
+            const name = path.split("/").pop();
+
+            // Ignore patterns
+            if (path.includes("node_modules/") || path.includes("dist/") || path.includes("build/") || path.includes("package-lock.json")) {
+                return false;
+            }
+
+            // Important files
+            return (
+                path === "package.json" ||
+                path.startsWith("src/") ||
+                ["index.js", "server.js", "app.js", "main.js"].includes(name)
+            );
+        })
+        .slice(0, 10); // Limit to 10 files to keep requests reasonable
+
+    const fileContents = await Promise.allSettled(
+        importantPaths.map(async (file) => {
+            try {
+                const res = await client.get(`/repos/${owner}/${repo}/contents/${file.path}`);
+                const content = Buffer.from(res.data.content, "base64").toString("utf-8");
+                return { path: file.path, content };
+            } catch {
+                return null;
+            }
+        })
+    );
+
+    return fileContents
+        .filter(res => res.status === "fulfilled" && res.value)
+        .map(res => res.value);
 }
 
 /**

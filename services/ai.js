@@ -18,7 +18,7 @@ export async function analyzeWithAI(repoData, explanationLevel = "beginner") {
         throw error;
     }
 
-    const { repoInfo, readme, languages, tree } = repoData;
+    const { repoInfo, readme, languages, tree, importantFiles } = repoData;
 
     // Build language summary
     const totalBytes = Object.values(languages).reduce((a, b) => a + b, 0);
@@ -32,6 +32,16 @@ export async function analyzeWithAI(repoData, explanationLevel = "beginner") {
         .slice(0, 300)
         .map((item) => `${item.type === "directory" ? "📁" : "📄"} ${item.path}`)
         .join("\n");
+
+    // Combine important files into a single string
+    let combinedCode = (importantFiles || [])
+        .map(f => `--- FILE: ${f.path} ---\n${f.content}`)
+        .join("\n\n");
+
+    const MAX_CHARS = 15000;
+    if (combinedCode.length > MAX_CHARS) {
+        combinedCode = combinedCode.slice(0, MAX_CHARS) + "\n\n[... Code truncated ...]";
+    }
 
     // Truncate README if too large
     const readmeContent =
@@ -52,7 +62,7 @@ export async function analyzeWithAI(repoData, explanationLevel = "beginner") {
 You are a senior software engineer and technical writer. Analyze the following GitHub repository and return a comprehensive, structured explanation.
 
 REPOSITORY: ${repoInfo.fullName}
-DESCRIPTION: ${repoInfo.description}
+DESCRIPTION: ${repoInfo.description || "No description provided."}
 STARS: ${repoInfo.stars} | FORKS: ${repoInfo.forks}
 TOPICS: ${repoInfo.topics.join(", ") || "None"}
 
@@ -64,6 +74,16 @@ ${readmeContent || "No README available."}
 
 FILE STRUCTURE:
 ${treeSummary || "File structure not available."}
+
+CODE CONTEXT (Selected files for analysis):
+${combinedCode || "No additional code context provided."}
+
+Analyze this GitHub repository and provide:
+1. Project summary (What it does, its purpose, and who it's for)
+2. Technologies used (Languages, frameworks, tools)
+3. Code quality review (How well written is the code?)
+4. Potential improvements (Optimization, architecture)
+5. Security issues if any (Vulnerabilities, data leaks)
 
 Analyze this repository and respond with ONLY a valid JSON object (no markdown, no code fences) with these exact keys:
 
